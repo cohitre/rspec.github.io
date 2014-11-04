@@ -7,11 +7,14 @@
 <p>Start with a very simple example that expresses some basic desired
 behaviour.</p><pre><code class="highlight ruby"><span class="c1"># bowling_spec.rb</span>
 <span class="nb">require</span> <span class="s1">'bowling'</span>
-<span class="n">describe</span> <span class="no">Bowling</span><span class="p">,</span> <span class="s2">"#score"</span> <span class="k">do</span>
-  <span class="n">it</span> <span class="s2">"returns 0 for all gutter game"</span> <span class="k">do</span>
-    <span class="n">bowling</span> <span class="o">=</span> <span class="no">Bowling</span><span class="p">.</span><span class="nf">new</span>
-    <span class="mi">20</span><span class="p">.</span><span class="nf">times</span> <span class="p">{</span> <span class="n">bowling</span><span class="p">.</span><span class="nf">hit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
-    <span class="n">expect</span><span class="p">(</span><span class="n">bowling</span><span class="p">.</span><span class="nf">score</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="no">RSpec</span><span class="p">.</span><span class="nf">describe</span> <span class="no">Bowling</span><span class="p">,</span> <span class="s2">"#score"</span> <span class="k">do</span>
+  <span class="n">context</span> <span class="s2">"with no strikes or spares"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"sums the pin count for each roll"</span> <span class="k">do</span>
+      <span class="n">bowling</span> <span class="o">=</span> <span class="no">Bowling</span><span class="p">.</span><span class="nf">new</span>
+      <span class="mi">20</span><span class="p">.</span><span class="nf">times</span> <span class="p">{</span> <span class="n">bowling</span><span class="p">.</span><span class="nf">hit</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">}</span>
+      <span class="n">expect</span><span class="p">(</span><span class="n">bowling</span><span class="p">.</span><span class="nf">score</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+    <span class="k">end</span>
   <span class="k">end</span>
 <span class="k">end</span>
 </code></pre>
@@ -20,13 +23,26 @@ behaviour.</p><pre><code class="highlight ruby"><span class="c1"># bowling_spec.
 ./bowling_spec.rb:4:
   uninitialized constant Bowling
 </code></pre>
+<p>Implement that basic behaviour...</p><pre><code class="highlight ruby"><span class="c1"># bowling.rb</span>
+<span class="k">class</span> <span class="nc">Bowling</span>
+  <span class="kp">attr_reader</span> <span class="ss">:score</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span>
+    <span class="vi">@score</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">hit</span><span class="p">(</span><span class="n">pin_count</span><span class="p">)</span>
+    <span class="vi">@score</span> <span class="o">+=</span> <span class="n">pin_count</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</code></pre>
 <p>Run the example and bask in the joy that is green.</p><pre><code class="highlight plaintext">$ rspec bowling_spec.rb --format nested
 
 Bowling#score
-  returns 0 for all gutter game
+  with no strikes or spares
+    sums the pin count for each roll
 
-Finished in 0.007534 seconds
-
+Finished in 0.00156 seconds (files took 0.1099 seconds to load)
 1 example, 0 failures
 </code></pre>
 <h3>Take very small steps</h3><p>Don’t rush ahead with more code. Instead, add another example and let
