@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]<!--><html class="no-js" lang="en"><!--<![endif]--><head><meta charset="UTF-8" /><title>RSpec: Behaviour Driven Development for Ruby</title><link href="/stylesheets/application.css" rel="stylesheet" type="text/css" /><link href="/stylesheets/normalize.css" rel="stylesheet" type="text/css" /><link href="http://rspec.github.io/rspec-website/stylesheets/application.css" rel="stylesheet" /><link href="http://rspec.github.io/rspec-website/stylesheets/normalize.css" rel="stylesheet" /><link href="/stylesheets/pages/upgrade.css" rel="stylesheet" type="text/css" /><link href="http://rspec.github.io/rspec-website/stylesheets/pages/upgrade.css" rel="stylesheet" /><link href="/stylesheets/pages/upgrade_index.css" rel="stylesheet" type="text/css" /><link href="http://rspec.github.io/rspec-website/stylesheets/pages/upgrade_index.css" rel="stylesheet" /><link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" /><link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css" /><link href="http://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet" type="text/css" /><script src="/javascripts/application.js" type="text/javascript"></script></head><body class="upgrade upgrade_index"><header><nav><h1><a href="/">RSpec</a></h1><ul><li><a href="/about">About</a></li><li><a href="/documentation">Documentation</a></li><li><a href="/upgrade">Upgrade</a></li><li><a href="/help">Get Help</a></li><li><a href="/contributing">Contributing</a></li></ul></nav></header><section><article class="upgrade"><h2>Upgrading from RSpec 2</h2><p>RSpec 3 includes many breaking changes, but our hope is to make this the smoothest
+major-version gem upgrade you've ever done. To assist with that process, we've developed
+RSpec 2.99 in tandem with RSpec 3. Every breaking change in 3.0 has a corresponding
+deprecation to 2.99.  Rather than just giving you a generic upgrade document that describes
+<em>all</em> of the breaking changes (most of which affect very few users!), RSpec 2.99 gives you a
+detailed upgrade checklist tailored to your project.</p>
+
+<p>In addition, <a href="https://twitter.com/nkym37">Yuji Nakayama</a> has created <a href="http://yujinakayama.me/transpec/">Transpec</a> – an absolutely amazing tool that can
+automatically upgrade most RSpec suites. We've tried it on a few projects and have been <em>amazed</em> at how well it works.</p>
+
+<h2 id="step-by-step-instructions">Step-by-step Instructions</h2>
+
+<ol>
+  <li>Ensure your test suite is already green on whatever RSpec 2.x version
+you're already using.</li>
+  <li>Install RSpec 2.99.</li>
+  <li>Run your test suite and ensure it's still green. (It should be, but
+we may have made a mistake – if it breaks anything, please report
+a bug!). Now would be a good time to commit.</li>
+  <li>You'll notice a bunch of deprecation warnings printed off at the
+end of the spec run. These may be truncated since we don't to
+spam you with the same deprecation warning over and over again. To
+get the full list of deprecations, you can pipe them into a file
+by passing the <code>--deprecation-out path/to/file</code> option.</li>
+  <li>If you want to understand all of what is being deprecated, it's a
+good idea to read through the deprecation messages.  In some cases,
+you have choices – such as continuing to use the <code>have</code> collection
+cardinality matchers via the extracted
+<a href="https://github.com/rspec/rspec-collection_matchers">rspec-collection_matchers</a>
+gem, or by rewriting the expectation expression to something like
+<code>expect(list.size).to eq(3)</code>.</li>
+  <li><code>gem install transpec</code> (Note that this need not go into your
+<code>Gemfile</code>: you run <code>transpec</code> as a standalone executable
+ outside the context of your bundle).</li>
+  <li>Run transpec on your project. Check <code>transpec --help</code> or
+<a href="https://github.com/yujinakayama/transpec#transpec">the README</a>
+for a full list of options.</li>
+  <li>Run the test suite (it should still be green but it's always good to
+check!) and commit.</li>
+  <li>If there are any remaining deprecation warnings (transpec doesn't
+quite handle all of the warnings you may get), deal with them.</li>
+  <li>Once you've got a deprecation-free test suite running against RSpec
+2.99, you're ready to upgrade to RSpec 3. Install RSpec 3.</li>
+  <li>Run your test suite. It should still be green. If anything fails,
+please open a Github issue – we consider it a bug! Note
+that you may still get a few additional deprecation warnings on
+RSpec 3 that weren't present on 2.99.  This is normal – there are
+a few things we couldn't easily deprecate in 2.99 and remove in 3.0,
+so they trigger deprecations in 3.0 with the plan to remove them in
+RSpec 4.</li>
+  <li>We recommend running <code>transpec</code> a second time. There are some
+changes that transpec is only able to make when your project is on
+RSpec 3.</li>
+  <li>Commit and enjoy using the latest RSpec release!</li>
+</ol>
+</article></section></body></html>
